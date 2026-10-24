@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cartiva - Shopping List</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =========================
+     SPLASH SCREEN
+========================== -->
+<div id="splashScreen" class="splash-screen">
+
+    <div class="splash-content">
+
+        <!-- ORIGINAL CARTIVA LOGO -->
+        <div class="cartiva-logo">
+            <div class="cart-icon">🛒</div>
+        </div>
+
+        <h1>Cartiva</h1>
+        <p>Smart Shopping List</p>
+
+        <div class="loading-bar">
+            <span></span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     APPLICATION
+========================== -->
+<div id="app" class="app hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="brand">
+
+                <div class="brand-icon">🛒</div>
+
+                <div>
+                    <h2>Cartiva</h2>
+                    <span>Shopping List</span>
+                </div>
+
+            </div>
+
+            <button id="closeSidebar" class="close-sidebar">
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+        <nav class="navigation">
+
+            <button class="nav-item active" data-page="home">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </button>
+
+            <button class="nav-item" data-page="shopping">
+                <span class="nav-icon">🛒</span>
+                <span>Shopping Lists</span>
+            </button>
+
+            <!-- ADD ITEM REMOVED FROM SIDEBAR -->
+
+            <button class="nav-item" data-page="completed">
+                <span class="nav-icon">✓</span>
+                <span>Completed</span>
+            </button>
+
+            <button class="nav-item" data-page="settings">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+            <p>Cartiva</p>
+            <small>Organize. Shop. Done.</small>
+        </div>
+
+    </aside>
+
+
+    <!-- OVERLAY -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="top-header">
+
+            <button id="menuButton" class="menu-button">
+                ☰
+            </button>
+
+            <div class="header-title">
+                <h1 id="pageTitle">My Shopping Lists</h1>
+
+                <p id="pageSubtitle">
+                    Organize your shopping with Cartiva
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             HOME PAGE
+        ========================== -->
+        <section id="homePage" class="page active-page">
+
+            <div class="welcome-section">
+
+                <div>
+                    <h2>Welcome to Cartiva! 👋</h2>
+
+                    <p>
+                        Keep track of everything you need to buy.
+                    </p>
+                </div>
+
+                <button id="homeAddButton" class="primary-button">
+                    + New List
+                </button>
+
+            </div>
+
+
+            <div class="statistics">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        🛒
+                    </div>
+
+                    <div>
+                        <span>Total Lists</span>
+                        <strong id="totalLists">0</strong>
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        📦
+                    </div>
+
+                    <div>
+                        <span>Total Items</span>
+                        <strong id="totalItems">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+                        <span>Purchased</span>
+                        <strong id="totalCompleted">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>My Shopping Lists</h2>
+                    <p>Your saved shopping lists</p>
+                </div>
+
+            </div>
+
+
+            <div id="shoppingListContainer"
+                 class="shopping-list-grid">
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SHOPPING PAGE
+        ========================== -->
+        <section id="shoppingPage" class="page">
+
+            <div class="page-heading">
+
+                <div>
+                    <h2>Shopping Lists</h2>
+                    <p>Manage all of your shopping lists.</p>
+                </div>
+
+                <button id="shoppingAddButton"
+                        class="primary-button">
+                    + New List
+                </button>
+
+            </div>
+
+            <div id="shoppingPageContainer"
+                 class="shopping-list-grid">
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             COMPLETED PAGE
+        ========================== -->
+        <section id="completedPage" class="page">
+
+            <div class="page-heading">
+
+                <div>
+                    <h2>Completed Items</h2>
+                    <p>Items that you have already purchased.</p>
+                </div>
+
+                <button id="clearCompletedButton"
+                        class="danger-button">
+                    Clear Completed
+                </button>
+
+            </div>
+
+            <div id="completedContainer"
+                 class="completed-container">
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SETTINGS PAGE
+        ========================== -->
+        <section id="settingsPage" class="page">
+
+            <div class="settings-wrapper">
+
+                <div class="settings-intro">
+
+                    <div class="settings-big-icon">
+                        ⚙️
+                    </div>
+
+                    <div>
+                        <h2>Settings</h2>
+                        <p>
+                            Personalize Cartiva to match the way you shop.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     APPEARANCE
+                ========================== -->
+                <div class="settings-section">
+
+                    <div class="settings-section-title">
+                        <span>🎨</span>
+
+                        <div>
+                            <h3>Appearance</h3>
+                            <p>Customize how Cartiva looks.</p>
+                        </div>
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Theme</strong>
+                            <p>Choose your favorite Cartiva theme.</p>
+                        </div>
+
+                        <select id="themeSelect">
+
+                            <option value="cartiva">
+                                Cartiva Purple
+                            </option>
+
+                            <option value="ocean">
+                                Ocean Blue
+                            </option>
+
+                            <option value="forest">
+                                Forest Green
+                            </option>
+
+                            <option value="sunset">
+                                Sunset Orange
+                            </option>
+
+                            <option value="rose">
+                                Rose Pink
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="theme-preview">
+
+                        <button class="theme-option"
+                                data-theme-preview="cartiva">
+                            <span class="theme-dot purple-dot"></span>
+                            Purple
+                        </button>
+
+                        <button class="theme-option"
+                                data-theme-preview="ocean">
+                            <span class="theme-dot blue-dot"></span>
+                            Ocean
+                        </button>
+
+                        <button class="theme-option"
+                                data-theme-preview="forest">
+                            <span class="theme-dot green-dot"></span>
+                            Forest
+                        </button>
+
+                        <button class="theme-option"
+                                data-theme-preview="sunset">
+                            <span class="theme-dot orange-dot"></span>
+                            Sunset
+                        </button>
+
+                        <button class="theme-option"
+                                data-theme-preview="rose">
+                            <span class="theme-dot pink-dot"></span>
+                            Rose
+                        </button>
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Font Size</strong>
+                            <p>Change the text size throughout Cartiva.</p>
+                        </div>
+
+                        <select id="fontSizeSelect">
+
+                            <option value="small">
+                                Small
+                            </option>
+
+                            <option value="medium">
+                                Medium
+                            </option>
+
+                            <option value="large">
+                                Large
+                            </option>
+
+                            <option value="extra-large">
+                                Extra Large
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     NOTIFICATIONS
+                ========================== -->
+                <div class="settings-section">
+
+                    <div class="settings-section-title">
+
+                        <span>🔔</span>
+
+                        <div>
+                            <h3>Notifications & Reminders</h3>
+                            <p>Control your shopping reminders.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Notifications</strong>
+                            <p>Allow Cartiva to show notification messages.</p>
+                        </div>
+
+                        <label class="switch">
+
+                            <input type="checkbox"
+                                   id="notificationToggle">
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Shopping Reminder</strong>
+                            <p>Enable your daily shopping reminder.</p>
+                        </div>
+
+                        <label class="switch">
+
+                            <input type="checkbox"
+                                   id="reminderToggle">
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Reminder Time</strong>
+                            <p>Choose when Cartiva should remind you.</p>
+                        </div>
+
+                        <input type="time"
+                               id="reminderTime">
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Reminder Frequency</strong>
+                            <p>How often should reminders appear?</p>
+                        </div>
+
+                        <select id="reminderFrequency">
+
+                            <option value="daily">
+                                Daily
+                            </option>
+
+                            <option value="weekly">
+                                Weekly
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     SHOPPING PREFERENCES
+                ========================== -->
+                <div class="settings-section">
+
+                    <div class="settings-section-title">
+
+                        <span>🛍️</span>
+
+                        <div>
+                            <h3>Shopping Preferences</h3>
+                            <p>Set your default shopping options.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Currency</strong>
+                            <p>Currency used for item prices.</p>
+                        </div>
+
+                        <select id="currencySelect">
+
+                            <option value="PHP">
+                                ₱ Philippine Peso
+                            </option>
+
+                            <option value="USD">
+                                $ US Dollar
+                            </option>
+
+                            <option value="EUR">
+                                € Euro
+                            </option>
+
+                            <option value="JPY">
+                                ¥ Japanese Yen
+                            </option>
+
+                            <option value="GBP">
+                                £ British Pound
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Shopping Budget</strong>
+                            <p>Set your preferred shopping budget.</p>
+                        </div>
+
+                        <input type="number"
+                               id="budgetInput"
+                               min="0"
+                               step="0.01"
+                               placeholder="0.00">
+
+                    </div>
+
+
+                    <div class="budget-display"
+                         id="budgetDisplay">
+                        No budget set
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Default Category</strong>
+                            <p>Category automatically selected for new items.</p>
+                        </div>
+
+                        <select id="defaultCategory">
+
+                            <option value="Grocery">
+                                Grocery
+                            </option>
+
+                            <option value="Household">
+                                Household
+                            </option>
+
+                            <option value="Personal">
+                                Personal
+                            </option>
+
+                            <option value="Electronics">
+                                Electronics
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+                        <div>
+                            <strong>Show Prices</strong>
+                            <p>Display item prices in shopping lists.</p>
+                        </div>
+
+                        <label class="switch">
+
+                            <input type="checkbox"
+                                   id="showPricesToggle">
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+<!-- =========================
+     CLEAR SHOPPING DATA
+========================== -->
+<div class="settings-section">
+
+    <div class="setting-control">
+
+        <div>
+            <strong>Clear All Shopping Data</strong>
+
+            <p>
+                Delete all shopping lists and items
+                saved in Cartiva.
+            </p>
+        </div>
+
+        <button id="clearAllButton"
+                class="danger-button">
+
+            🗑 Clear Data
+
+        </button>
+
+    </div>
+
+</div>
+
+                <!-- =========================
+                     HELP
+                ========================== -->
+                <div class="settings-section">
+
+                    <div class="settings-section-title">
+
+                        <span>❓</span>
+
+                        <div>
+                            <h3>Help & Support</h3>
+                            <p>Need help using Cartiva?</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="help-grid">
+
+                        <button class="help-card"
+                                id="howToUseButton">
+
+                            <span>📖</span>
+
+                            <strong>How to Use</strong>
+
+                            <small>
+                                Learn how Cartiva works.
+                            </small>
+
+                        </button>
+
+
+                        <button class="help-card"
+                                id="tipsButton">
+
+                            <span>💡</span>
+
+                            <strong>Shopping Tips</strong>
+
+                            <small>
+                                Helpful tips for organizing lists.
+                            </small>
+
+                        </button>
+
+
+                        <button class="help-card"
+                                id="privacyButton">
+
+                            <span>🔒</span>
+
+                            <strong>Privacy</strong>
+
+                            <small>
+                                Learn how your data is stored.
+                            </small>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     APP INFORMATION
+                ========================== -->
+                <div class="settings-section">
+
+                    <div class="settings-section-title">
+
+                        <span>ℹ️</span>
+
+                        <div>
+                            <h3>App Information</h3>
+                            <p>Information about Cartiva.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="app-info">
+
+                        <div class="app-info-logo">
+                            🛒
+                        </div>
+
+                        <div>
+
+                            <h3>Cartiva</h3>
+
+                            <p>
+                                Smart Shopping List
+                            </p>
+
+                            <span>
+                                Version 1.0.0
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>Application</span>
+                        <strong>Cartiva Shopping List</strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>Storage</span>
+                        <strong>Browser Local Storage</strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>Currency</span>
+                        <strong id="currentCurrencyInfo">
+                            Philippine Peso (₱)
+                        </strong>
+
+                    </div>
+
+
+                    <div class="cartiva-message">
+
+                        <strong>Organize. Shop. Done. 🛒</strong>
+
+                        <p>
+                            Cartiva helps you organize your shopping
+                            lists quickly and easily.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FLOATING BUTTON -->
+    <button id="floatingAddButton"
+            class="floating-button">
+        +
+    </button>
+
+</div>
+
+
+<!-- =========================
+     CREATE LIST MODAL
+========================== -->
+<div id="listModal" class="modal">
+
+    <div class="modal-content">
+
+        <button class="modal-close"
+                id="closeListModal">
+            ×
+        </button>
+
+        <div class="modal-icon">
+            🛒
+        </div>
+
+        <h2>Create Shopping List</h2>
+
+        <p>
+            Give your shopping list a name.
+        </p>
+
+        <form id="createListForm">
+
+            <div class="form-group">
+
+                <label for="listName">
+                    List Name
+                </label>
+
+                <input type="text"
+                       id="listName"
+                       placeholder="e.g. Grocery List"
+                       required>
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button type="button"
+                        id="cancelListButton"
+                        class="secondary-button">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="primary-button">
+                    Create
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     LIST DETAILS MODAL
+========================== -->
+<div id="detailsModal" class="modal">
+
+    <div class="modal-content large-modal">
+
+        <button class="modal-close"
+                id="closeDetailsModal">
+            ×
+        </button>
+
+        <div id="detailsContent"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ADD ITEM MODAL
+========================== -->
+<div id="itemModal" class="modal">
+
+    <div class="modal-content">
+
+        <button class="modal-close"
+                id="closeItemModal">
+            ×
+        </button>
+
+        <div class="modal-icon">
+            ➕
+        </div>
+
+        <h2>Add Item</h2>
+
+        <p>Add an item to your shopping list.</p>
+
+        <form id="modalItemForm">
+
+            <input type="hidden"
+                   id="modalListId">
+
+
+            <div class="form-group">
+
+                <label for="modalItemName">
+                    Item Name
+                </label>
+
+                <input type="text"
+                       id="modalItemName"
+                       placeholder="e.g. Rice"
+                       required>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="modalQuantity">
+                        Quantity
+                    </label>
+
+                    <input type="number"
+                           id="modalQuantity"
+                           min="1"
+                           value="1"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="modalCategory">
+                        Category
+                    </label>
+
+                    <select id="modalCategory">
+
+                        <option value="Grocery">Grocery</option>
+                        <option value="Household">Household</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Other">Other</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="modalPrice">
+                    Price
+                </label>
+
+                <input type="number"
+                       id="modalPrice"
+                       min="0"
+                       step="0.01"
+                       placeholder="0.00">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="modalNotes">
+                    Notes
+                </label>
+
+                <textarea id="modalNotes"
+                          placeholder="e.g. 5 kg"></textarea>
+
+            </div>
+
+
+            <button type="submit"
+                    class="primary-button full-button">
+                Add Item
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     INFORMATION MODAL
+========================== -->
+<div id="infoModal" class="modal">
+
+    <div class="modal-content">
+
+        <button class="modal-close"
+                id="closeInfoModal">
+            ×
+        </button>
+
+        <div class="modal-icon">
+            ℹ️
+        </div>
+
+        <div id="infoModalContent"></div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+<div id="toast" class="toast">
+    <span id="toastMessage"></span>
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
